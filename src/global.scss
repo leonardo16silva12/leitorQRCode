@@ -36,6 +36,8 @@ ion-content {
 
 ion-button {
     font-family: 'Montserrat', sans-serif;
+    font-weight: bolder;
+    font-size: 15px;
 }
 
 .textB {
@@ -49,9 +51,9 @@ ion-button {
     color: #351893;
 }
 
-iconH {
+.iconH {
     color: #351893;
-    font-size: 5px;
+    font-size: 25px;
 }
 
 .header-md::after {
