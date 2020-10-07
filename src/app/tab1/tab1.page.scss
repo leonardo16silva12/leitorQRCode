@@ -1,0 +1,31 @@
+ion-thumbnail {
+    margin: 0 auto;
+}
+
+.screen {
+    width: 99vw;
+    height: 99vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.scan {
+    position: relative;
+    height: 70vw;
+    width: 70vw;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 25px;
+    border: 2px dashed #351893;
+    border-radius: 10px;
+}
+
+img {
+    height: 90%;
+    border-radius: 10px;
+}
