@@ -2,6 +2,8 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner/ngx';
 import { AlertController, Platform } from '@ionic/angular';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { HistoricoService } from '../servicos/historico.service';
+import { Historico } from '../models/Historico';
 
 @Component({
   selector: 'app-tab1',
@@ -37,6 +39,7 @@ export class Tab1Page {
     public platform: Platform,
     private screenOrientation: ScreenOrientation,
     private cdRef: ChangeDetectorRef,
+    private historicoService: HistoricoService,
   ) {
 
     this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
@@ -62,7 +65,7 @@ export class Tab1Page {
   }
 
   // Método para ler o código do QR Code
-  public lerQRCode() {
+  public async lerQRCode() {
 
     //Chama e prepara para a leitura.
 this.qrScanner.prepare()
@@ -91,7 +94,7 @@ this.qrScanner.prepare()
 
       //Recebendo a leitura.
       //Quando encontrar algo, ele vai subscrever um texto do tipo string.
-       this.leitorQRCode = this.qrScanner.scan().subscribe((text: string) => {
+       this.leitorQRCode = this.qrScanner.scan().subscribe( async (text: string) => {
         
         // Gravando a leitura na variável "leitura" e realizando um if ternário para garantir que
         // tanto no browser quanto no android, a variável irá receber o valor.
@@ -116,6 +119,17 @@ this.qrScanner.prepare()
         // Verifica se houve modificações nas variáveis.
         this.cdRef.detectChanges();
 
+        // Salvando os dados no firebase
+        const historico = new Historico();
+          historico.leitura = this.leitura;
+          historico.dataHora = new Date();
+
+          await this.historicoService.create(historico).then(resposta => {
+            console.log(resposta);
+          }).catch(erro => {
+            this.presentAlert('Aviso', 'Erro ao salvar no Firebase.');
+            console.log('Erro:', erro);
+          });
        });
 
      } else if (status.denied) {

@@ -1,16 +1,56 @@
 <ion-header>
-  <ion-toolbar color="dark">
+  <ion-toolbar color="medium">
     <ion-row>
-    <ion-col size="1"></ion-col>
-    <ion-col size="10">    
-<ion-title class="textB"> Histórico </ion-title>
-  </ion-col>
-    <ion-col size="1"></ion-col>
-  </ion-row>
+
+      <ion-col size="2">
+        <ion-thumbnail>
+          <img src="assets/logo.png">
+        </ion-thumbnail>
+      </ion-col>
+  
+      <ion-col size="9"> 
+        <br>   
+        <ion-text class="textB mL"> QReader </ion-text>
+    </ion-col>
+  
+      <ion-col size="1">
+      </ion-col>
+  
+    </ion-row>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" color="medium">
+
+  <ion-item-sliding *ngFor="let historico of listaHistoricos"> 
+
+
+    <ion-item lines="full" color="dark">
+    <div slot="start">
+      <ion-icon color="blue" name="qr-code" class="iconH"></ion-icon>
+    </div>
+      <ion-label>
+        <div>
+          <p class="textN data">
+            <ion-icon color="success" name="calendar"></ion-icon>
+            {{historico.dataHora | date: 'short' : '': 'pt'}}
+          </p>
+          <p class="textN leitura">
+            {{historico.leitura}}
+          </p>
+        </div>
+      </ion-label>
+      <div slot="end">
+
+      </div>
+    </ion-item>
+
+    <ion-item-options side="end">
+      <ion-item-option color="danger" (click)="deletar()">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-item-option>
+    </ion-item-options>
+  </ion-item-sliding>
 
 
 </ion-content>
